@@ -1,0 +1,111 @@
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>奇跡体験アンビリバボー　チャレンジ</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+background: #1a1a2e;
+color: #cac2c2;
+text-align: center;
+padding: 40px;
+}
+h1 {
+color: #cbcb36;
+margin-bottom: 30px;
+}
+.controls {
+margin: 20px 0;
+}
+select, button {
+padding: 12px 20px;
+font-size: 20px;
+margin: 0 10px;
+border-radius: 50px;
+}
+button {
+background: #00ffcc;
+color: #1a1a2e;
+border: none;
+cursor: pointer;
+font-weight: bold;
+}
+button:hover {
+background: #00ccaa;
+transform: scale(1.05);
+}
+#result {
+font-size: 60px;
+font-weight: bold;
+min-height: 180px;
+margin: 40px 0;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 30px;
+background: #2d55c3;
+border-radius: 20px;
+box-shadow: 0 10px 30px rgba(68, 134, 124, 0.3);
+transition: all 0.4s;
+}
+.info {
+margin-top: 30px;
+opacity: 0.8;
+}
+</style>
+</head>
+<body>
+<h1>奇跡体験アンビリバボー　チャレンジ</h1>
+
+<div class="controls">
+<select id="length">
+<option value="11">チャレンジ</option>
+</select>
+<button onclick="generateRandomLetters()">生成！</button>
+</div>
+
+<div id="result">ABCD</div>
+
+<div class="info">ちなみに、すべてが揃う確率は33916800分の1らしい<br>
+揃ったらラッキーですね</div>
+
+<script>
+const letters = '奇跡体験アンビリバボー';
+
+function getRandomLetter() {
+return letters[Math.floor(Math.random() * letters.length)].toUpperCase();
+}
+
+function generateRandomLetters() {
+const length = parseInt(document.getElementById('length').value);
+const resultDiv = document.getElementById('result');
+
+// 少しアニメーション
+resultDiv.style.opacity = '0';
+resultDiv.style.transform = 'scale(0.6)';
+
+setTimeout(() => {
+let randomString = '';
+const used = new Set(); // 重複を避ける（欲しい場合はコメントアウト）
+
+for (let i = 0; i < length; i++) {
+let letter;
+do {
+letter = getRandomLetter();
+} while (used.has(letter)); // 重複なし
+used.add(letter);
+randomString += letter + ' ';
+}
+
+resultDiv.textContent = randomString.trim();
+resultDiv.style.opacity = '1';
+resultDiv.style.transform = 'scale(1)';
+}, 100);
+}
+
+// 最初に1回表示
+window.onload = generateRandomLetters;
+</script>
+</body>
+</html>
